@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,9 +19,11 @@ public class JsonBidReader extends AbstractJsonReader {
 
     private static final String TYPE = "ty";
     private static final String BID = "bid";
-    private static final String BIDS_FILE_PATH = "D:\\small_bids.json";
 
     private final QueueExecutorService queueExecutorService;
+
+    @Value("${bids-file-path}")
+    private String bidsFilePath;
 
     @Autowired
     public JsonBidReader(JsonFactory jsonFactory, QueueExecutorService queueExecutorService) {
@@ -30,7 +33,7 @@ public class JsonBidReader extends AbstractJsonReader {
 
     @Override
     protected String getFilePath() {
-        return BIDS_FILE_PATH;
+        return bidsFilePath;
     }
 
     @Override
